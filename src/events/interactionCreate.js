@@ -1,8 +1,6 @@
 import { Events, MessageFlags } from "discord.js";
 import { logger } from "../utils/logger.js";
 import { getGuildConfig } from "../services/guildConfig.js";
-import { handleApplicationModal } from "../commands/Community/apply.js";
-import { handleApplicationReviewModal } from "../commands/Community/app-admin.js";
 import {
   handleInteractionError,
   createError,
