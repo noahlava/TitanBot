@@ -20,6 +20,18 @@ export default {
       });
       if (!deferred) return;
 
+      const allowedRoleId = "1509667220702367754";
+      if (!interaction.member.roles.cache.has(allowedRoleId)) {
+        return await InteractionHelper.safeEditReply(interaction, {
+          embeds: [
+            errorEmbed(
+              "No Permission",
+              "You do not have the required role to use this command.",
+            ),
+          ],
+        });
+      }
+
       const { member } = interaction;
 
       if (!member.voice.channel) {

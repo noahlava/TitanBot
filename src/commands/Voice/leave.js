@@ -20,6 +20,23 @@ export default {
       });
       if (!deferred) return;
 
+      const deferred = await InteractionHelper.safeDefer(interaction, {
+        flags: MessageFlags.Ephemeral,
+      });
+      if (!deferred) return;
+
+      const allowedRoleId = "1509667220702367754";
+      if (!interaction.member.roles.cache.has(allowedRoleId)) {
+        return await InteractionHelper.safeEditReply(interaction, {
+          embeds: [
+            errorEmbed(
+              "No Permission",
+              "You do not have the required role to use this command!",
+            ),
+          ],
+        });
+      }
+
       const connection = getVoiceConnection(interaction.guildId);
 
       if (!connection) {
