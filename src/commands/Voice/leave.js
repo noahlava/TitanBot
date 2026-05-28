@@ -33,7 +33,7 @@ export default {
         });
       }
 
-      const channelName =
+      const voiceChannelName =
         interaction.guild.members.me.voice.channel?.name || "voice channel";
       connection.destroy();
 
@@ -46,7 +46,7 @@ export default {
 
       await InteractionHelper.safeEditReply(interaction, {
         embeds: [
-          successEmbed("Left Voice Channel", `Left **${channelName}**!`),
+          successEmbed("Left Voice Channel", `Left **${voiceChannelName}**!`),
         ],
       });
     } catch (error) {
