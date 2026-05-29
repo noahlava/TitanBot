@@ -1,7 +1,7 @@
 import { Events, ChannelType, PermissionFlagsBits } from "discord.js";
 import { logger } from "../utils/logger.js";
 
-const CATEGORY_ID = "1509954216188317766";
+const CATEGORY_ID = "1509388566537568407";
 const GUILD_ID = process.env.GUILD_ID;
 const CHANNEL_NAME_IDLE = "📞 Call: No Active Call";
 
