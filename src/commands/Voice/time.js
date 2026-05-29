@@ -25,7 +25,10 @@ export default {
         (c) => c.members && c.members.size > 0 && c.type === 2,
       );
 
-      if (!voiceChannel || voiceChannel.members.size === 0) {
+      if (
+        !voiceChannel ||
+        voiceChannel.members.filter((m) => !m.user.bot).size === 0
+      ) {
         return await InteractionHelper.safeEditReply(interaction, {
           embeds: [
             errorEmbed(
@@ -36,19 +39,14 @@ export default {
         });
       }
 
-      const startTime = callStartTimes.get(voiceChannel.id);
-      if (!startTime) {
-        return await InteractionHelper.safeEditReply(interaction, {
-          embeds: [
-            errorEmbed(
-              "Unknown",
-              "I don't know when this call started — it may have begun before I was online.",
-            ),
-          ],
-        });
+      let callStart = callStartTimes.get(voiceChannel.id);
+
+      if (!callStart) {
+        callStart = Date.now();
+        callStartTimes.set(voiceChannel.id, callStart);
       }
 
-      const elapsed = Date.now() - startTime;
+      const elapsed = Date.now() - callStart;
       const hours = Math.floor(elapsed / 3600000);
       const minutes = Math.floor((elapsed % 3600000) / 60000);
       const seconds = Math.floor((elapsed % 60000) / 1000);
@@ -82,6 +80,5 @@ export default {
     }
   },
 
-  // Call this from your voiceStateUpdate event to track when calls start/end
   _callStartTimes: callStartTimes,
 };
